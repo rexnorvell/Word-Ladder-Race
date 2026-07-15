@@ -1,0 +1,25 @@
+.GameRow {
+    color: var(--text-color-light);
+    font-family: var(--regular-font);
+    
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+
+.WordCell {
+    padding: 10px;
+    text-align: center;
+    background: var(--primary-color);
+    outline: var(--outline-width) solid var(--primary-hover-color);
+    width: 20%;
+    border-radius: var(--border-radius);
+}
+
+.DefinitionCell {
+    padding: 10px;
+    background: var(--primary-color);
+    outline: var(--outline-width) solid var(--primary-hover-color);
+    border-radius: var(--border-radius);
+    width: 100%;
+}
