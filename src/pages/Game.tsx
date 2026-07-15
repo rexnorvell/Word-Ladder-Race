@@ -6,10 +6,14 @@ import { useEffect, useState } from "react";
 import loadWords from "../services/words";
 import "./Game.css";
 
-function Game() {
+interface Props {
+  wordListLength?: number;
+}
+
+function Game({ wordListLength = 10 }: Props) {
   const [words, setWords] = useState<Record<string, string>>({});
   useEffect(() => {
-    setWords(loadWords);
+    setWords(loadWords(wordListLength));
   }, []);
   const navigate: NavigateFunction = useNavigate();
 
