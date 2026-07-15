@@ -10,15 +10,21 @@
 .WordCell {
     padding: 10px;
     text-align: center;
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     outline: var(--outline-width) solid var(--primary-hover-color);
     width: 20%;
     border-radius: var(--border-radius);
+    transition: background-color var(--transition-duration), outline var(--transition-duration);
+}
+
+.WordCell--guessed {
+    background-color: var(--secondary-color);
+    outline: var(--outline-width) solid var(--secondary-hover-color);
 }
 
 .DefinitionCell {
     padding: 10px;
-    background: var(--primary-color);
+    background-color: var(--primary-color);
     outline: var(--outline-width) solid var(--primary-hover-color);
     border-radius: var(--border-radius);
     width: 100%;

@@ -1,7 +1,7 @@
 import "./TextBlock.css";
 
 interface Props {
-  className: string;
+  className?: string;
   text: string;
 }
 
