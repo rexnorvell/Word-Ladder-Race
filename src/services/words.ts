@@ -38,15 +38,18 @@ function loadWords(listLength: number): Record<string, string> {
     const maxRetries: number = 100;
     let currentTry: number = 0;
     let wordLadder: [string, string][] = [];
+    let ladderWords: Set<string> = new Set<string>();
     while (currentTry < maxRetries) {
 
         // Get the starting word for the ladder by selecting a random word in the list
         wordLadder = [];
+        ladderWords = new Set<string>();
         let currentIndex: number = getRandomInt(0, Object.keys(adjacencyList).length - 1);
         let currentWord: string = Object.keys(adjacencyList)[currentIndex];
         let currentDefinition: string = wordsDictionary[currentWord];
         let previousDifferentCharacterIndex: number = -1;
         wordLadder.push([currentWord, currentDefinition]);
+        ladderWords.add(currentWord);
 
         // Fill the rest of the ladder
         for (let i: number = 0; i < listLength - 1; i++) {
@@ -55,7 +58,10 @@ function loadWords(listLength: number): Record<string, string> {
                 if (j !== previousDifferentCharacterIndex) {
                     let numAdjacentWords: number = adjacencyList[currentWord][j].length;
                     for (let k = 0; k < numAdjacentWords; k++) {
-                        adjacentWords.push([adjacencyList[currentWord][j][k], j]);
+                        const adjacentWord: string = adjacencyList[currentWord][j][k];
+                        if (!ladderWords.has(adjacentWord)) {
+                            adjacentWords.push([adjacentWord, j]);
+                        }
                     }
                 }
             }
@@ -69,6 +75,7 @@ function loadWords(listLength: number): Record<string, string> {
             currentDefinition = wordsDictionary[currentWord];
             previousDifferentCharacterIndex = adjacentWords[randomIndex][1];
             wordLadder.push([currentWord, currentDefinition]);
+            ladderWords.add(currentWord);
         }
         if (wordLadder.length === listLength) {
             break;
