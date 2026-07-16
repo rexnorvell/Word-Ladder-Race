@@ -1,10 +1,29 @@
 import Button from "../components/Button/Button";
 import HeaderBar from "../components/HeaderBar/HeaderBar";
 import TextBlock from "../components/TextBlock/TextBlock";
+import { getLeaderboardEntries } from "../services/api";
+import type { LeaderboardEntry } from "../types/LeaderboardEntry";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Home() {
+  const [leaderboardEntries, setLeaderboardEntries] = useState<
+    LeaderboardEntry[]
+  >([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    loadLeaderboardEntries();
+  }, []);
+
+  async function loadLeaderboardEntries() {
+    try {
+      const data = await getLeaderboardEntries();
+      setLeaderboardEntries(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <div className="App">
@@ -21,7 +40,9 @@ function Home() {
             navigate("/game");
           }}
         />
-        <Button text="Quit" color="secondary" />
+        {leaderboardEntries[0]?.player === "Rex" && (
+          <TextBlock text="Successfully retrieved leaderboard data!" />
+        )}
       </div>
     </div>
   );
