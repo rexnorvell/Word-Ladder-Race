@@ -1,0 +1,30 @@
+.TableContainer {
+    font-family: var(--regular-font);
+    color: var(--text-color-light);
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    border-top: var(--outline-width) solid var(--primary-hover-color);
+    border-bottom: var(--outline-width) solid var(--primary-hover-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.TableHeader {
+    padding: 10px;
+    border-top: 1px solid var(--primary-hover-color);
+    display: flex;
+    flex-direction: row;
+}
+
+.TableRow {
+    padding: 10px;
+    border-top: 1px solid var(--primary-hover-color);
+    display: flex;
+    flex-direction: row;
+}
+
+.TableCell {
+    flex: 1;
+    text-align: center;
+}

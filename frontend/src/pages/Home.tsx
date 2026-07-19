@@ -1,6 +1,7 @@
 import Button from "../components/Button/Button";
 import HeaderBar from "../components/HeaderBar/HeaderBar";
 import TextBlock from "../components/TextBlock/TextBlock";
+import Table from "../components/Table/Table";
 import { getLeaderboardEntries } from "../services/api";
 import type { LeaderboardEntry } from "../types/LeaderboardEntry";
 import { useNavigate } from "react-router-dom";
@@ -40,9 +41,7 @@ function Home() {
             navigate("/game");
           }}
         />
-        {leaderboardEntries[0]?.player === "Rex" && (
-          <TextBlock text="Successfully retrieved leaderboard data!" />
-        )}
+        <Table title="Leaderboard" entries={leaderboardEntries} />
       </div>
     </div>
   );
