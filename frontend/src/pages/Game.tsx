@@ -89,16 +89,18 @@ function Game({ wordListLength = 10 }: Props) {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        {wordData.map(({ word, definition, guessed }) => (
-          <div className="GameRow" key={word}>
-            <div
-              className={`WordCell WordCell--${guessed ? "guessed" : "not-guessed"}`}
-            >
-              {guessed ? word : "?"}
+        <div className="WordGrid">
+          {wordData.map(({ word, definition, guessed }) => (
+            <div className="GameRow" key={word}>
+              <div
+                className={`WordCell WordCell--${guessed ? "guessed" : "not-guessed"}`}
+              >
+                {guessed ? word : "?"}
+              </div>
+              <div className="DefinitionCell">{definition}</div>
             </div>
-            <div className="DefinitionCell">{definition}</div>
-          </div>
-        ))}
+          ))}
+        </div>
         {done && elapsedTime ? (
           <TextBlock
             text={`All done! Elapsed time: ${elapsedTime / 1000} seconds`}

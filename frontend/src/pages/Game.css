@@ -1,32 +1,35 @@
+.WordGrid {
+    outline: var(--outline-width) solid var(--primary-hover-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
 .GameRow {
     color: var(--text-color-light);
     font-family: var(--regular-font);
     
     display: flex;
     flex-direction: row;
-    column-gap: 10px;
+    font-size: 1.6em;
 }
 
 .WordCell {
     padding: 10px;
     text-align: center;
     background-color: var(--primary-color);
-    outline: var(--outline-width) solid var(--primary-hover-color);
     width: 20%;
-    border-radius: var(--border-radius);
-    transition: background-color var(--transition-duration), outline var(--transition-duration);
+    transition: background-color var(--transition-duration);
 }
 
 .WordCell--guessed {
     background-color: var(--secondary-color);
-    outline: var(--outline-width) solid var(--secondary-hover-color);
+    font-weight: bold;
 }
 
 .DefinitionCell {
     padding: 10px;
     background-color: var(--primary-color);
-    outline: var(--outline-width) solid var(--primary-hover-color);
-    border-radius: var(--border-radius);
+    border-left: var(--outline-width) solid var(--primary-hover-color);
     width: 100%;
     text-wrap: nowrap;
     text-overflow: ellipsis;
