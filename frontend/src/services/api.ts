@@ -1,3 +1,5 @@
+import type { CreateLeaderboardEntryRequest } from "../types/CreateLeaderboardEntryRequest";
+
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 async function apiFetch(endpoint: string, options: RequestInit = {}) {
@@ -23,5 +25,10 @@ async function apiFetch(endpoint: string, options: RequestInit = {}) {
 
 export async function getLeaderboardEntries() {
     const res = await apiFetch("/leaderboard");
+    return res.json();
+}
+
+export async function submitLeaderboardEntry(entry: CreateLeaderboardEntryRequest) {
+    const res = await apiFetch("/leaderboard", {method: "POST", body: JSON.stringify(entry)});
     return res.json();
 }

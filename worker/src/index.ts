@@ -39,6 +39,54 @@ export default {
         headers: corsHeaders,
       });
     }
+    else if (url.pathname === "/leaderboard" && request.method === "POST") {
+      const { player, time_ms } = await request.json<{
+        player: string;
+        time_ms: number;
+      }>();
+
+      const existing = await env.DB
+        .prepare(
+          `
+          SELECT time_ms
+          FROM leaderboard
+          WHERE player = ?
+          `
+        )
+        .bind(player)
+        .first<{ time_ms: number }>();
+
+        if (existing === null) {
+          await env.DB
+            .prepare(
+              `
+              INSERT INTO leaderboard (player, time_ms)
+              VALUES (?, ?)
+              `
+            )
+            .bind(player, time_ms)
+            .run();
+        }
+
+        else if (time_ms < existing.time_ms) {
+          await env.DB
+            .prepare(
+              `
+              UPDATE leaderboard
+              SET time_ms = ?
+              WHERE player = ?
+              `
+            )
+            .bind(time_ms, player)
+            .run();
+        }
+
+
+      return Response.json(
+        { success: true },
+        { headers: corsHeaders }
+      );
+    }
 
     return new Response("Not Found", {
       status: 404,

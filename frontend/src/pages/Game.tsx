@@ -4,6 +4,8 @@ import TextInput from "../components/TextInput/TextInput";
 import TextBlock from "../components/TextBlock/TextBlock";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import type { CreateLeaderboardEntryRequest } from "../types/CreateLeaderboardEntryRequest";
+import { submitLeaderboardEntry } from "../services/api";
 import loadWords from "../services/words";
 import "./Game.css";
 
@@ -22,10 +24,12 @@ function Game({ wordListLength = 10 }: Props) {
   const [guess, setGuess] = useState<string>("");
   const [startTime, setStartTime] = useState<number | null>(null);
   const [endTime, setEndTime] = useState<number | null>(null);
+
   const navigate: NavigateFunction = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const done = wordData.length > 0 && wordData.every((entry) => entry.guessed);
+  const done: boolean =
+    wordData.length > 0 && wordData.every((entry) => entry.guessed);
   const elapsedTime =
     startTime !== null && endTime !== null ? endTime - startTime : null;
 
@@ -36,10 +40,23 @@ function Game({ wordListLength = 10 }: Props) {
   }, [wordListLength]);
 
   useEffect(() => {
-    if (done && endTime === null) {
-      setEndTime(Date.now());
+    if (done && endTime === null && startTime !== null) {
+      const end = Date.now();
+      setEndTime(end);
+      submit({
+        player: "Rex",
+        time_ms: end - startTime,
+      });
     }
-  }, [done, endTime]);
+  }, [done, endTime, elapsedTime]);
+
+  async function submit(entry: CreateLeaderboardEntryRequest) {
+    try {
+      await submitLeaderboardEntry(entry);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   function newGame() {
     inputRef.current?.focus();
