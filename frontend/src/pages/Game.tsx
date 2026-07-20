@@ -104,6 +104,7 @@ function Game({ wordListLength = 10 }: Props) {
         {done && elapsedTime ? (
           <TextBlock
             text={`All done! Elapsed time: ${elapsedTime / 1000} seconds`}
+            size={5}
           />
         ) : (
           <TextInput

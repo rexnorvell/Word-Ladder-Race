@@ -3,7 +3,6 @@
     color: var(--text-color-light);
     font-family: var(--regular-font);
     border-radius: var(--border-radius);
-    outline: var(--outline-width) solid var(--primary-hover-color);
     transition: background-color var(--transition-duration);
 
     cursor: pointer;
@@ -16,12 +15,10 @@
 
 .Button--primary {
     background-color: var(--primary-color);
-    outline: var(--outline-width) solid var(--primary-color);
 }
 
 .Button--secondary {
     background-color: var(--secondary-color);
-    outline: var(--outline-width) solid var(--secondary-color);
 }
 
 .Button--primary:hover {
