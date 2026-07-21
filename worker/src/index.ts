@@ -73,7 +73,7 @@ export default {
             .prepare(
               `
               UPDATE leaderboard
-              SET time_ms = ?
+              SET time_ms = ?, created_at = CURRENT_TIMESTAMP
               WHERE player = ?
               `
             )
