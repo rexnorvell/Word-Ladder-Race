@@ -1,7 +1,8 @@
-.TextInput {
-    padding: 10px;
-    font-family: var(--regular-font);
+.GameTextInput {
+    color: var(--text-color-dark);
     border-radius: var(--border-radius);
+    text-align: center;
+    padding: 10px;
     border: none;
     outline: var(--outline-width) solid var(--primary-hover-color);
 }

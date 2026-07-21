@@ -1,25 +1,22 @@
-import { forwardRef } from "react";
 import "./TextInput.css";
 
 interface Props {
+  placeholder: string;
   value: string;
-  maxLength: number;
   onChange: (value: string) => void;
+  type?: string;
 }
 
-const TextInput = forwardRef<HTMLInputElement, Props>(
-  ({ value, maxLength, onChange }: Props, ref) => {
-    return (
-      <input
-        ref={ref}
-        className="TextInput"
-        placeholder="Enter word here"
-        maxLength={maxLength}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
-    );
-  },
-);
+function TextInput({ placeholder, value, onChange, type = "text" }: Props) {
+  return (
+    <input
+      className="TextInput"
+      type={type}
+      placeholder={placeholder}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    />
+  );
+}
 
 export default TextInput;

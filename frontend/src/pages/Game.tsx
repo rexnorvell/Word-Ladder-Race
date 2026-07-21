@@ -1,12 +1,12 @@
 import HeaderBar from "../components/HeaderBar/HeaderBar";
 import Button from "../components/Button/Button";
-import TextInput from "../components/TextInput/TextInput";
+import GameTextInput from "../components/GameTextInput/GameTextInput";
 import TextBlock from "../components/TextBlock/TextBlock";
 import PopUp from "../components/PopUp/PopUp";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import type { CreateLeaderboardEntryRequest } from "../types/CreateLeaderboardEntryRequest";
-import { submitLeaderboardEntry } from "../services/api";
+import { getUser, submitLeaderboardEntry } from "../services/api";
 import loadWords from "../services/words";
 import "./Game.css";
 
@@ -25,6 +25,7 @@ function Game({ wordListLength = 10 }: Props) {
   const [guess, setGuess] = useState<string>("");
   const [startTime, setStartTime] = useState<number | null>(null);
   const [endTime, setEndTime] = useState<number | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
 
   const navigate: NavigateFunction = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,6 +39,17 @@ function Game({ wordListLength = 10 }: Props) {
     inputRef.current?.focus();
     setWordData(createWordData());
     setStartTime(Date.now());
+
+    async function loadUser() {
+      try {
+        const user = await getUser();
+        setUsername(user.username);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    loadUser();
   }, [wordListLength]);
 
   useEffect(() => {
@@ -45,7 +57,6 @@ function Game({ wordListLength = 10 }: Props) {
       const end = Date.now();
       setEndTime(end);
       submit({
-        player: "Rex",
         time_ms: end - startTime,
       });
     }
@@ -105,7 +116,11 @@ function Game({ wordListLength = 10 }: Props) {
             <PopUp>
               <div className="PopUpRow">
                 <TextBlock
-                  text={`All done! Elapsed time: ${elapsedTime / 1000} seconds`}
+                  text={
+                    username
+                      ? `Good job, ${username}! Elapsed time: ${elapsedTime / 1000} seconds`
+                      : `Good job! Elapsed time: ${elapsedTime / 1000} seconds`
+                  }
                   size={5}
                 />
               </div>
@@ -130,7 +145,7 @@ function Game({ wordListLength = 10 }: Props) {
         </div>
         {!(done && elapsedTime) && (
           <>
-            <TextInput
+            <GameTextInput
               ref={inputRef}
               value={guess}
               maxLength={4}

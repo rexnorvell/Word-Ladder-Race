@@ -1,6 +1,0 @@
-CREATE TABLE leaderboard (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    player TEXT NOT NULL,
-    time_ms INTEGER NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-);

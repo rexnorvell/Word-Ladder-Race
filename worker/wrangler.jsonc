@@ -14,13 +14,7 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
-	"d1_databases": [
-		{
-			"binding": "DB",
-			"database_name": "leaderboard",
-			"database_id": "64dc7933-7935-4a71-a245-fc9435deb742"
-		}
-	],
+	
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
@@ -39,7 +33,30 @@
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
 	 */
 	"vars": {
-		"ALLOWED_ORIGINS": "http://localhost:5173,https://rexnorvell.github.io"
+		"ALLOWED_ORIGINS": "http://localhost:5173",
+		"ENVIRONMENT": "development"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "word-ladder-race",
+			"database_id": "e7ffbc98-222c-4fbb-9dcb-087ba232d0bd"
+		}
+	],
+	"env": {
+		"production": {
+			"vars": {
+				"ALLOWED_ORIGINS": "https://rexnorvell.github.io",
+				"ENVIRONMENT": "production"
+			},
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "word-ladder-race",
+					"database_id": "e7ffbc98-222c-4fbb-9dcb-087ba232d0bd"
+				}
+			]
+		}
 	}
 	/**
 	 * Static Assets

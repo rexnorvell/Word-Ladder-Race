@@ -1,3 +1,9 @@
+import { leaderboard } from "./routes/leaderboard";
+import { register } from "./routes/register";
+import { login } from "./routes/login";
+import { logout } from "./routes/logout";
+import { me } from "./routes/me";
+
 function getCorsHeaders(request: Request, env: Env) {
   const origin = request.headers.get("Origin");
   const allowedOrigins = env.ALLOWED_ORIGINS.split(",");
@@ -6,6 +12,7 @@ function getCorsHeaders(request: Request, env: Env) {
     ...(origin && allowedOrigins.includes(origin)
       ? { "Access-Control-Allow-Origin": origin }
       : {}),
+    "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   };
@@ -23,69 +30,20 @@ export default {
 
     const url = new URL(request.url);
 
-    if (url.pathname === "/leaderboard" && request.method === "GET") {
-      const { results } = await env.DB
-        .prepare(
-          `
-          SELECT *
-          FROM leaderboard
-          ORDER BY time_ms ASC
-          LIMIT 10
-          `
-        )
-        .all();
-
-      return Response.json(results, {
-        headers: corsHeaders,
-      });
+    if (url.pathname === "/me") {
+      return me(request, env, corsHeaders);
     }
-    else if (url.pathname === "/leaderboard" && request.method === "POST") {
-      const { player, time_ms } = await request.json<{
-        player: string;
-        time_ms: number;
-      }>();
-
-      const existing = await env.DB
-        .prepare(
-          `
-          SELECT time_ms
-          FROM leaderboard
-          WHERE player = ?
-          `
-        )
-        .bind(player)
-        .first<{ time_ms: number }>();
-
-        if (existing === null) {
-          await env.DB
-            .prepare(
-              `
-              INSERT INTO leaderboard (player, time_ms)
-              VALUES (?, ?)
-              `
-            )
-            .bind(player, time_ms)
-            .run();
-        }
-
-        else if (time_ms < existing.time_ms) {
-          await env.DB
-            .prepare(
-              `
-              UPDATE leaderboard
-              SET time_ms = ?, created_at = CURRENT_TIMESTAMP
-              WHERE player = ?
-              `
-            )
-            .bind(time_ms, player)
-            .run();
-        }
-
-
-      return Response.json(
-        { success: true },
-        { headers: corsHeaders }
-      );
+    else if (url.pathname === "/leaderboard") {
+      return leaderboard(request, env, corsHeaders);
+    }
+    else if (url.pathname === "/register") {
+      return register(request, env, corsHeaders);
+    }
+    else if (url.pathname === "/login") {
+      return login(request, env, corsHeaders);
+    }
+    else if (url.pathname === "/logout") {
+      return logout(request, env, corsHeaders);
     }
 
     return new Response("Not Found", {
