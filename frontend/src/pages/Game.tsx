@@ -2,6 +2,7 @@ import HeaderBar from "../components/HeaderBar/HeaderBar";
 import Button from "../components/Button/Button";
 import TextInput from "../components/TextInput/TextInput";
 import TextBlock from "../components/TextBlock/TextBlock";
+import PopUp from "../components/PopUp/PopUp";
 import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import type { CreateLeaderboardEntryRequest } from "../types/CreateLeaderboardEntryRequest";
@@ -100,41 +101,64 @@ function Game({ wordListLength = 10 }: Props) {
               <div className="DefinitionCell">{definition}</div>
             </div>
           ))}
+          {done && elapsedTime && (
+            <PopUp>
+              <div className="PopUpRow">
+                <TextBlock
+                  text={`All done! Elapsed time: ${elapsedTime / 1000} seconds`}
+                  size={5}
+                />
+              </div>
+              <div className="PopUpRow">
+                <Button
+                  text="New Game"
+                  color="primary"
+                  onClick={() => {
+                    newGame();
+                  }}
+                />
+                <Button
+                  text="Back"
+                  color="secondary"
+                  onClick={() => {
+                    navigate("/home");
+                  }}
+                />
+              </div>
+            </PopUp>
+          )}
         </div>
-        {done && elapsedTime ? (
-          <TextBlock
-            text={`All done! Elapsed time: ${elapsedTime / 1000} seconds`}
-            size={5}
-          />
-        ) : (
-          <TextInput
-            ref={inputRef}
-            value={guess}
-            maxLength={4}
-            onChange={(value) => {
-              if (value.length === 4) {
-                checkGuess(value);
-                setGuess("");
-              } else {
-                setGuess(value);
-              }
-            }}
-          />
+        {!(done && elapsedTime) && (
+          <>
+            <TextInput
+              ref={inputRef}
+              value={guess}
+              maxLength={4}
+              onChange={(value) => {
+                if (value.length === 4) {
+                  checkGuess(value);
+                  setGuess("");
+                } else {
+                  setGuess(value);
+                }
+              }}
+            />
+            <Button
+              text="New Game"
+              color="primary"
+              onClick={() => {
+                newGame();
+              }}
+            />
+            <Button
+              text="Back"
+              color="secondary"
+              onClick={() => {
+                navigate("/home");
+              }}
+            />
+          </>
         )}
-        <Button
-          text="New Game"
-          color="primary"
-          onClick={() => {
-            newGame();
-          }}
-        />
-        <Button
-          text="Back"
-          color="secondary"
-          onClick={() => {
-            navigate("/home");
-          }}
-        />
       </div>
     </div>
   );

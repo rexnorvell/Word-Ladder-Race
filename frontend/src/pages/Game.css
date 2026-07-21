@@ -2,6 +2,7 @@
     outline: var(--outline-width) solid var(--primary-hover-color);
     border-radius: var(--border-radius);
     overflow: hidden;
+    position: relative;
 }
 
 .GameRow {
