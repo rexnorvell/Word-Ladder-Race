@@ -16,7 +16,7 @@ async function apiFetch(endpoint: string, options: RequestInit = {}) {
         let message = `Request failed (${res.status})`;
         try {
             const error = await res.json();
-            if (error.detail) {
+            if (typeof error.detail === "string") {
                 message = error.detail;
             }
         } catch {}
@@ -37,6 +37,11 @@ export async function submitLeaderboardEntry(entry: CreateLeaderboardEntryReques
 
 export async function login(credentials: LogInRequest) {
     const res = await apiFetch("/login", {method: "POST", body: JSON.stringify(credentials)});
+    return res.json();
+}
+
+export async function register(credentials: LogInRequest) {
+    const res = await apiFetch("/register", {method: "POST", body: JSON.stringify(credentials)});
     return res.json();
 }
 

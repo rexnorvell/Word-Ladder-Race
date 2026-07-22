@@ -12,7 +12,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
     const USERNAME_REGEX = /^[A-Za-z0-9_]{3,20}$/;
     if (!USERNAME_REGEX.test(trimmedUsername)) {
         return Response.json(
-            { error: "Invalid username." },
+            { detail: "Username must be between 3 and 20 characters." },
             { status: 400, headers: corsHeaders }
         );
     }
@@ -20,7 +20,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
     // Ensure the password is greater than or equal to 8 characters
     if (password.length < 8) {
         return Response.json(
-            { error: "Password must be at least 8 characters." },
+            { detail: "Password must be at least 8 characters." },
             { status: 400, headers: corsHeaders }
         );
     }
@@ -36,7 +36,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
         .first();
     if (existing) {
         return Response.json(
-            { error: "Username already exists." },
+            { detail: "Username already exists." },
             { status: 409, headers: corsHeaders }
         );
     }

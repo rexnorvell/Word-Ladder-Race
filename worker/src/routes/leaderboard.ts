@@ -18,13 +18,12 @@ async function submitScore(request: Request, env: Env, corsHeaders: HeadersInit)
     const { time_ms } = await request.json<{
         time_ms: number;
     }>();
-    console.log("Leaderboard request received");
 
     // Ensure the user is authenticated
     const user = await getCurrentUser(request, env);
     if (!user) {
         return Response.json(
-            { error: "Unauthorized" },
+            { detail: "Unauthorized" },
             { status: 401, headers: corsHeaders }
         );
     }

@@ -12,10 +12,10 @@
     flex-direction: column;
     padding: 10px;
 
-    animation: popIn 0.5s ease-out;
+    animation: popUpPopIn 0.5s ease-out;
 }
 
-@keyframes popIn {
+@keyframes popUpPopIn {
     from {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.95);

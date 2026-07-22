@@ -1,14 +1,17 @@
+import type { ReactNode } from "react";
 import "./Button.css";
 
 interface Props {
-  text: string;
+  text?: string;
+  icon?: ReactNode;
   color?: "primary" | "secondary";
   onClick?: () => void;
 }
 
-function Button({ text, color = "primary", onClick = () => {} }: Props) {
+function Button({ text, icon, color = "primary", onClick = () => {} }: Props) {
   return (
     <button className={`Button Button--${color}`} onClick={onClick}>
+      {icon}
       {text}
     </button>
   );

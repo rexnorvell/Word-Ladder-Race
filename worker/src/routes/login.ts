@@ -21,7 +21,7 @@ export async function login(request: Request, env: Env, corsHeaders: HeadersInit
         }>();
     if (!existing) {
         return Response.json(
-            { error: "Invalid credentials." },
+            { detail: "Invalid credentials." },
             { status: 401, headers: corsHeaders }
         );
     }
@@ -30,7 +30,7 @@ export async function login(request: Request, env: Env, corsHeaders: HeadersInit
     const verified: boolean = await verifyPassword(password, existing.password_hash);
     if (!verified) {
         return Response.json(
-            { error: "Invalid credentials." },
+            { detail: "Invalid credentials." },
             { status: 401, headers: corsHeaders }
         );
     }

@@ -2,7 +2,12 @@
     background-color: var(--surface-color);
     border-bottom: 3px solid var(--primary-color);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    padding: 10px 20px;
+}
+
+.HeaderBarRight {
+    margin-left: auto;
 }
 
 .HeaderBar {
@@ -10,6 +15,5 @@
     font-family: var(--regular-font);
 
     text-align: center;
-    padding: 20px;
     font-weight: bold;
 }
