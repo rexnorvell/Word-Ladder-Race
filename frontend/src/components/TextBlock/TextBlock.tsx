@@ -1,14 +1,17 @@
+import type { ReactNode } from "react";
 import "./TextBlock.css";
 
 interface Props {
   className?: string;
   size: 1 | 2 | 3 | 4 | 5 | 6;
-  text: string;
+  children: ReactNode;
 }
 
-function TextBlock({ className, size, text }: Props) {
+function TextBlock({ className, size, children }: Props) {
   return (
-    <div className={`TextBlock TextBlock--${size} ${className}`}>{text}</div>
+    <div className={`TextBlock TextBlock--${size} ${className}`}>
+      {children}
+    </div>
   );
 }
 

@@ -22,10 +22,10 @@ function Form({ title, onSubmit }: Props) {
     <div className="FormContainer">
       <form className="FormContents" onSubmit={handleSubmit}>
         <div className="FormHeader">
-          <TextBlock text={title} size={4} />
+          <TextBlock size={4}>{title}</TextBlock>
         </div>
         <div className="FormRow">
-          <TextBlock text="Username" size={6} />
+          <TextBlock size={6}>Username</TextBlock>
           <TextInput
             placeholder="Username"
             value={username}
@@ -33,7 +33,7 @@ function Form({ title, onSubmit }: Props) {
           />
         </div>
         <div className="FormRow">
-          <TextBlock text="Password" size={6} />
+          <TextBlock size={6}>Password</TextBlock>
           <TextInput
             placeholder="Password"
             type="password"

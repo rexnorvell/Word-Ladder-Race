@@ -33,16 +33,12 @@ function HeaderBar() {
   return (
     <div className="HeaderBarContainer">
       <div className="HeaderBarLeft">
-        <TextBlock
-          size={3}
-          text="Rex's Word Ladder Race"
-          className="HeaderBar"
-        />
-        <TextBlock
-          size={6}
-          text={username ? `Welcome, ${username}!` : "Welcome!"}
-          className="HeaderBar"
-        />
+        <TextBlock size={3} className="HeaderBar">
+          <strong>Rex's Word Ladder Race</strong>
+        </TextBlock>
+        <TextBlock size={6} className="HeaderBar">
+          {username ? `Welcome, ${username}!` : "Welcome!"}
+        </TextBlock>
       </div>
       <div className="HeaderBarRight">
         <HamburgerMenu options={options} />

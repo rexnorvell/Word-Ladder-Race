@@ -30,19 +30,31 @@ function Home() {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <TextBlock size={4} text="Welcome to Rex's Word Ladder Race!" />
-        <TextBlock
-          size={6}
-          text="A word ladder is a chain of words that differ by only one letter. For example, Pork > Park > Bark > Barn is a word ladder!"
-        />
-        <TextBlock
-          size={6}
-          text="In the game, players are shown a series of definitions that correspond to words. To guess a word, simply type it in the text box at the bottom of the word grid. If a guess is correct, the word will appear beside its definition."
-        />
-        <TextBlock
-          size={6}
-          text="The goal is to guess all words in the ladder as quickly as possible. Climb the leaderboards as you face off against other players in this fast-paced puzzle-solving game!"
-        />
+        <TextBlock size={4}>
+          <strong>Welcome to Rex's Word Ladder Race!</strong>
+        </TextBlock>
+        <TextBlock size={6}>
+          A <em>word ladder</em> is a chain of words that differ by only one
+          letter. For example,{" "}
+          <em>
+            Pork {">"} Park {">"} Bark {">"} Barn
+          </em>{" "}
+          is a word ladder!
+        </TextBlock>
+        <TextBlock size={6}>
+          In the game, players are shown a series of definitions that correspond
+          to words. To guess a word, simply type it in the text box at the
+          bottom of the word grid. If a guess is{" "}
+          <span style={{ color: "var(--success-color)" }}>
+            <strong>correct</strong>
+          </span>
+          , the word will appear beside its definition.
+        </TextBlock>
+        <TextBlock size={6}>
+          The goal is to guess all words in the ladder as <em>quickly</em> as
+          possible. Climb the leaderboards as you face off against other players
+          in this fast-paced puzzle-solving game!
+        </TextBlock>
         <Button
           text="Play"
           color="primary"

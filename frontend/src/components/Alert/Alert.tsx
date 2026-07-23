@@ -9,7 +9,7 @@ interface Props {
 function Alert({ text, type }: Props) {
   return (
     <div className={`AlertContainer Alert--${type}`}>
-      <TextBlock size={5} text={text} />
+      <TextBlock size={5}>{text}</TextBlock>
     </div>
   );
 }

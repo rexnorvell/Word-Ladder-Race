@@ -38,7 +38,9 @@ function Account({}: Props) {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <TextBlock size={5} text={`Username: ${username}`} />
+        <TextBlock size={5}>
+          Username: <strong>{username}</strong>
+        </TextBlock>
         <Button text="Sign Out" onClick={signOut} />
       </div>
     </div>

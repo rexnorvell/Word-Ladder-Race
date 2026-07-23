@@ -43,7 +43,7 @@ function Game({ wordListLength = 10 }: Props) {
     async function loadUser() {
       try {
         const user = await getUser();
-        setUsername(user.username);
+        setUsername(user?.username);
       } catch (err) {
         console.error(err);
       }
@@ -115,14 +115,11 @@ function Game({ wordListLength = 10 }: Props) {
           {done && elapsedTime && (
             <PopUp>
               <div className="PopUpRow">
-                <TextBlock
-                  text={
-                    username
-                      ? `Good job, ${username}! Elapsed time: ${elapsedTime / 1000} seconds`
-                      : `Good job! Elapsed time: ${elapsedTime / 1000} seconds`
-                  }
-                  size={5}
-                />
+                <TextBlock size={5}>
+                  {username
+                    ? `Good job, ${username}! Elapsed time: ${elapsedTime / 1000} seconds`
+                    : `Good job! Elapsed time: ${elapsedTime / 1000} seconds`}
+                </TextBlock>
               </div>
               <div className="PopUpRow">
                 <Button

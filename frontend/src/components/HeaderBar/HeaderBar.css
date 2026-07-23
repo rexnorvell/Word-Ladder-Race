@@ -20,5 +20,4 @@
 .HeaderBar {
     color: var(--text-color-light);
     font-family: var(--regular-font);
-    font-weight: bold;
 }
