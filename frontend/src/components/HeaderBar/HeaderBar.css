@@ -10,10 +10,15 @@
     margin-left: auto;
 }
 
+.HeaderBarLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .HeaderBar {
     color: var(--text-color-light);
     font-family: var(--regular-font);
-
-    text-align: center;
     font-weight: bold;
 }

@@ -40,12 +40,30 @@ export async function login(credentials: LogInRequest) {
     return res.json();
 }
 
+export async function logout() {
+    const res = await apiFetch("/logout");
+    return res.json();
+}
+
 export async function register(credentials: LogInRequest) {
     const res = await apiFetch("/register", {method: "POST", body: JSON.stringify(credentials)});
     return res.json();
 }
 
 export async function getUser() {
-    const res = await apiFetch("/me");
+    const res = await fetch(`${BASE_URL}/me`, { credentials: "include" });
+    if (res.status === 401) {
+        return null;
+    }
+    if (!res.ok) {
+        let message = `Request failed (${res.status})`;
+        try {
+            const error = await res.json();
+            if (typeof error.detail === "string") {
+                message = error.detail;
+            }
+        } catch {}
+        throw new Error(message);
+    }
     return res.json();
 }

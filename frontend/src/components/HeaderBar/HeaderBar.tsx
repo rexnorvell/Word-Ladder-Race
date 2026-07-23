@@ -1,21 +1,51 @@
+import { useEffect, useState } from "react";
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import TextBlock from "../TextBlock/TextBlock";
-
+import { getUser } from "../../services/api";
 import "./HeaderBar.css";
 
 function HeaderBar() {
+  const [username, setUsername] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  async function loadUser() {
+    try {
+      const user = await getUser();
+      setUsername(user?.username);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const options: [string, string][] = [
+    ["Home", "/home"],
+    ["Play", "/game"],
+  ];
+  if (username) {
+    options.push(["Account", "/account"]);
+  } else {
+    options.push(["Login", "/login"], ["Register", "/register"]);
+  }
+
   return (
     <div className="HeaderBarContainer">
-      <TextBlock size={3} text="Rex's Word Ladder Race" className="HeaderBar" />
-      <div className="HeaderBarRight">
-        <HamburgerMenu
-          options={[
-            ["Home", "/home"],
-            ["Play", "/game"],
-            ["Login", "/login"],
-            ["Register", "/register"],
-          ]}
+      <div className="HeaderBarLeft">
+        <TextBlock
+          size={3}
+          text="Rex's Word Ladder Race"
+          className="HeaderBar"
         />
+        <TextBlock
+          size={6}
+          text={username ? `Welcome, ${username}!` : "Welcome!"}
+          className="HeaderBar"
+        />
+      </div>
+      <div className="HeaderBarRight">
+        <HamburgerMenu options={options} />
       </div>
     </div>
   );

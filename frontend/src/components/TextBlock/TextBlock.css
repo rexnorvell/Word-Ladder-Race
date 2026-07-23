@@ -3,7 +3,6 @@
     color: var(--text-color-light);
     font-family: var(--regular-font);
     font-size: 1.6em;
-    align-self: center;
 }
 
 .TextBlock--1 {
