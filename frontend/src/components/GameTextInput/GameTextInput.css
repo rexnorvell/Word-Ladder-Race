@@ -5,4 +5,5 @@
     padding: 10px;
     border: none;
     outline: var(--outline-width) solid var(--primary-hover-color);
+    box-shadow: 4px 4px 8px var(--shadow-color);
 }

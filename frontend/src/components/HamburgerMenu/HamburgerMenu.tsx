@@ -30,7 +30,11 @@ function HamburgerMenu({ options }: Props) {
         <div className="HamburgerMenuDropdown">
           {options.map((option) => (
             <div className="HamburgerMenuDropdownRow" key={option[0]}>
-              <Button text={option[0]} onClick={() => navigate(option[1])} />
+              <Button
+                text={option[0]}
+                onClick={() => navigate(option[1])}
+                shadow={false}
+              />
             </div>
           ))}
         </div>

@@ -19,6 +19,8 @@
     --error-color: #842e39;
     --success-color: #3e842e;
 
+    --shadow-color: rgba(0, 0, 0, 0.8);
+
     --transition-duration: 0.5s;
     --border-radius: 10px;
     --outline-width: 3px;

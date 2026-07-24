@@ -12,6 +12,8 @@
     flex-direction: column;
     padding: 10px;
 
+    box-shadow: 4px 4px 8px var(--shadow-color);
+
     animation: popUpPopIn 0.5s ease-out;
 }
 

@@ -3,6 +3,7 @@
     border-radius: var(--border-radius);
     overflow: hidden;
     position: relative;
+    box-shadow: 4px 4px 8px var(--shadow-color);
     animation: wordGridPopIn 0.5s ease-out;
 }
 

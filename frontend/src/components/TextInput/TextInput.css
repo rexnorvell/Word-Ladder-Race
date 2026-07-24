@@ -4,4 +4,5 @@
     border-radius: var(--border-radius);
     border: none;
     outline: var(--outline-width) solid var(--primary-hover-color);
+    box-shadow: 4px 4px 4px var(--shadow-color);
 }

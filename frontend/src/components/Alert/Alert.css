@@ -4,6 +4,7 @@
     border-radius: var(--border-radius);
     border-top: var(--outline-width) solid var(--primary-hover-color);
     border-bottom: var(--outline-width) solid var(--primary-hover-color);
+    box-shadow: 4px 4px 8px var(--shadow-color);
 }
 
 @keyframes alertPopIn {
