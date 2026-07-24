@@ -2,21 +2,21 @@ import { forwardRef } from "react";
 import "./GameTextInput.css";
 
 interface Props {
-  value: string;
-  maxLength: number;
+  enabled?: boolean;
   onChange: (value: string) => void;
+  value: string;
 }
 
 const GameTextInput = forwardRef<HTMLInputElement, Props>(
-  ({ value, maxLength, onChange }: Props, ref) => {
+  ({ enabled = true, onChange, value }: Props, ref) => {
     return (
       <input
         ref={ref}
         className="GameTextInput"
         placeholder="Enter word here"
-        maxLength={maxLength}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        disabled={!enabled}
       />
     );
   },

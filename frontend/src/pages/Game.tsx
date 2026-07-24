@@ -3,7 +3,6 @@ import Button from "../components/Button/Button";
 import GameTextInput from "../components/GameTextInput/GameTextInput";
 import TextBlock from "../components/TextBlock/TextBlock";
 import PopUp from "../components/PopUp/PopUp";
-import { useNavigate, type NavigateFunction } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import type { CreateLeaderboardEntryRequest } from "../types/CreateLeaderboardEntryRequest";
 import { getUser, submitLeaderboardEntry } from "../services/api";
@@ -18,22 +17,17 @@ interface WordEntry {
   word: string;
   definition: string;
   guessed: boolean;
+  incorrect: boolean;
 }
 
 function Game({ wordListLength = 10 }: Props) {
   const [wordData, setWordData] = useState<WordEntry[]>([]);
   const [guess, setGuess] = useState<string>("");
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [endTime, setEndTime] = useState<number | null>(null);
   const [username, setUsername] = useState<string | null>(null);
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
-  const navigate: NavigateFunction = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const done: boolean =
-    wordData.length > 0 && wordData.every((entry) => entry.guessed);
-  const elapsedTime =
-    startTime !== null && endTime !== null ? endTime - startTime : null;
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -53,16 +47,18 @@ function Game({ wordListLength = 10 }: Props) {
   }, [wordListLength]);
 
   useEffect(() => {
-    if (done && endTime === null && startTime !== null) {
-      const end = Date.now();
-      setEndTime(end);
-      submit({
-        time_ms: end - startTime,
-      });
+    if (wordData.every((entry) => entry.guessed)) {
+      endGame();
     }
-  }, [done, endTime, elapsedTime]);
+  }, [wordData]);
 
-  async function submit(entry: CreateLeaderboardEntryRequest) {
+  useEffect(() => {
+    if (!popupMessage) {
+      inputRef.current?.focus();
+    }
+  }, [popupMessage]);
+
+  async function submitTime(entry: CreateLeaderboardEntryRequest) {
     try {
       await submitLeaderboardEntry(entry);
     } catch (err) {
@@ -71,11 +67,40 @@ function Game({ wordListLength = 10 }: Props) {
   }
 
   function newGame() {
-    inputRef.current?.focus();
+    setPopupMessage(null);
     setWordData(createWordData());
     setGuess("");
-    setEndTime(null);
     setStartTime(Date.now());
+  }
+
+  function endGame(forfeited: boolean = false) {
+    if (forfeited) {
+      setWordData((currentWords) =>
+        currentWords.map((entry) =>
+          !entry.guessed ? { ...entry, incorrect: true } : entry,
+        ),
+      );
+      const numCorrect = wordData.filter(
+        (entry) => entry.guessed == true,
+      ).length;
+      setPopupMessage(
+        `Unlucky! You got ${numCorrect}/${wordListLength} correct.`,
+      );
+    } else {
+      const end = Date.now();
+      if (!startTime) {
+        return;
+      }
+      const totalTime = end - startTime;
+      if (username) {
+        submitTime({
+          time_ms: totalTime,
+        });
+      }
+      setPopupMessage(
+        `Good job${username ? `, ${username}` : ""}! Elapsed time: ${totalTime / 1000} seconds.`,
+      );
+    }
   }
 
   function createWordData(): WordEntry[] {
@@ -84,92 +109,90 @@ function Game({ wordListLength = 10 }: Props) {
       word,
       definition,
       guessed: false,
+      incorrect: false,
     }));
   }
 
-  function checkGuess(guess: string) {
-    setWordData((currentWords) =>
-      currentWords.map((entry) =>
-        entry.word.toLowerCase() === guess.toLowerCase()
-          ? { ...entry, guessed: true }
-          : entry,
-      ),
+  function checkGuess(guess: string): boolean {
+    const normalizedGuess: string = guess.toLowerCase();
+
+    const isCorrect: boolean = wordData.some(
+      (entry) =>
+        entry.word.toLowerCase() === normalizedGuess && entry.guessed === false,
     );
+
+    if (isCorrect) {
+      setWordData((currentWords) =>
+        currentWords.map((entry) =>
+          entry.word.toLowerCase() === guess.toLowerCase()
+            ? { ...entry, guessed: true }
+            : entry,
+        ),
+      );
+    }
+
+    return isCorrect;
   }
 
   return (
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <div className="WordGrid">
-          {wordData.map(({ word, definition, guessed }) => (
-            <div className="GameRow" key={word}>
-              <div
-                className={`WordCell WordCell--${guessed ? "guessed" : "not-guessed"}`}
-              >
-                {guessed ? word : "?"}
-              </div>
-              <div className="DefinitionCell">{definition}</div>
-            </div>
-          ))}
-          {done && elapsedTime && (
-            <PopUp>
-              <div className="PopUpRow">
-                <TextBlock size={5}>
-                  {username
-                    ? `Good job, ${username}! Elapsed time: ${elapsedTime / 1000} seconds`
-                    : `Good job! Elapsed time: ${elapsedTime / 1000} seconds`}
-                </TextBlock>
-              </div>
-              <div className="PopUpRow">
-                <Button
-                  text="New Game"
-                  color="primary"
-                  onClick={() => {
-                    newGame();
-                  }}
-                />
-                <Button
-                  text="Back"
-                  color="secondary"
-                  onClick={() => {
-                    navigate("/home");
-                  }}
-                />
-              </div>
-            </PopUp>
-          )}
-        </div>
-        {!(done && elapsedTime) && (
-          <>
-            <GameTextInput
-              ref={inputRef}
-              value={guess}
-              maxLength={4}
-              onChange={(value) => {
-                if (value.length === 4) {
-                  checkGuess(value);
-                  setGuess("");
-                } else {
-                  setGuess(value);
-                }
-              }}
-            />
+        <GameTextInput
+          ref={inputRef}
+          enabled={!popupMessage}
+          onChange={(value) => {
+            if (value.length === 4) {
+              const isCorrect: boolean = checkGuess(value);
+              if (isCorrect) {
+                setGuess("");
+              } else {
+                setGuess(value);
+              }
+            } else {
+              setGuess(value);
+            }
+          }}
+          value={guess}
+        />
+        <div className="ControlRow">
+          <Button
+            text="New Game"
+            color="primary"
+            onClick={() => {
+              newGame();
+            }}
+          />
+          {!popupMessage && (
             <Button
-              text="New Game"
-              color="primary"
-              onClick={() => {
-                newGame();
-              }}
-            />
-            <Button
-              text="Back"
+              text="Give Up"
               color="secondary"
               onClick={() => {
-                navigate("/home");
+                endGame(true);
               }}
             />
-          </>
+          )}
+        </div>
+        {wordData.length > 0 && (
+          <div className="WordGrid">
+            {wordData.map(({ word, definition, guessed, incorrect }) => (
+              <div className="GameRow" key={word}>
+                <div
+                  className={`WordCell WordCell--${guessed ? "guessed" : "not-guessed"} ${incorrect ? "WordCell--incorrect" : ""}`}
+                >
+                  {guessed || incorrect ? word : "?"}
+                </div>
+                <div className="DefinitionCell">{definition}</div>
+              </div>
+            ))}
+            {popupMessage && (
+              <PopUp>
+                <div className="PopUpRow">
+                  <TextBlock size={5}>{popupMessage}</TextBlock>
+                </div>
+              </PopUp>
+            )}
+          </div>
         )}
       </div>
     </div>
