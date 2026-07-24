@@ -14,6 +14,17 @@
     right: 0;
     z-index: 1000;
     box-shadow: 4px 4px 8px var(--shadow-color);
+    transform-origin: top right;
+    transition: opacity var(--transition-duration) ease-out, transform var(--transition-duration) ease-out;
+    opacity: 0;
+    transform: translateY(-8px) scaleY(0.9);
+    pointer-events: none;
+}
+
+.HamburgerMenuDropdown--open {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    pointer-events: auto;
 }
 
 .HamburgerMenuDropdownRow {
