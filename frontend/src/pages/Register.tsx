@@ -26,7 +26,11 @@ function Register({}: Props) {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <Form title="Register" onSubmit={handleRegister} />
+        <Form
+          buttonText="Register"
+          title="Register"
+          onSubmit={handleRegister}
+        />
         {alert && <Alert text={alert.message} type={alert.type} />}
       </div>
     </div>

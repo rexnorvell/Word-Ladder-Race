@@ -1,4 +1,8 @@
+import showIcon from "../../assets/images/show.svg";
+import hideIcon from "../../assets/images/hide.svg";
+import Button from "../Button/Button";
 import "./TextInput.css";
+import { useState } from "react";
 
 interface Props {
   placeholder: string;
@@ -8,14 +12,32 @@ interface Props {
 }
 
 function TextInput({ placeholder, value, onChange, type = "text" }: Props) {
+  const [show, setShow] = useState(false);
+
   return (
-    <input
-      className="TextInput"
-      type={type}
-      placeholder={placeholder}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    />
+    <div className="TextInputContainer">
+      <input
+        className={`TextInput ${type === "password" ? "TextInput--password" : ""}`}
+        type={type === "password" && show ? "text" : type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      ></input>
+      {type === "password" && (
+        <Button
+          color="transparent"
+          shadow={false}
+          type="button"
+          icon={
+            <img
+              src={show ? showIcon : hideIcon}
+              alt=""
+              onClick={() => setShow(!show)}
+            />
+          }
+        />
+      )}
+    </div>
   );
 }
 

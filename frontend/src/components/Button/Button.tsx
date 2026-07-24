@@ -5,7 +5,8 @@ interface Props {
   text?: string;
   shadow?: boolean;
   icon?: ReactNode;
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "transparent";
+  type?: "submit" | "reset" | "button" | undefined;
   onClick?: () => void;
 }
 
@@ -14,12 +15,14 @@ function Button({
   shadow = true,
   icon,
   color = "primary",
+  type = "submit",
   onClick = () => {},
 }: Props) {
   return (
     <button
       className={`Button Button--${color} ${shadow ? "Button--shadow" : ""}`}
       onClick={onClick}
+      type={type}
     >
       {icon}
       {text}

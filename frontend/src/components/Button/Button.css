@@ -25,6 +25,10 @@
     background-color: var(--secondary-color);
 }
 
+.Button--transparent {
+    background-color: transparent;
+}
+
 .Button--primary:hover {
     background-color: var(--primary-hover-color);
 }

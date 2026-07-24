@@ -26,7 +26,7 @@ function Login({}: Props) {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <Form title="Log In" onSubmit={handleLogin} />
+        <Form buttonText="Log In" title="Log In" onSubmit={handleLogin} />
         {alert && <Alert text={alert.message} type={alert.type} />}
       </div>
     </div>

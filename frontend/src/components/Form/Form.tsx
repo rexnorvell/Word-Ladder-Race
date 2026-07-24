@@ -6,10 +6,11 @@ import "./Form.css";
 
 interface Props {
   title: string;
+  buttonText: string;
   onSubmit: (username: string, password: string) => void;
 }
 
-function Form({ title, onSubmit }: Props) {
+function Form({ title, buttonText, onSubmit }: Props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -42,7 +43,7 @@ function Form({ title, onSubmit }: Props) {
           />
         </div>
         <div className="FormRow">
-          <Button text="Log In" color="secondary" />
+          <Button text={buttonText} color="secondary" />
         </div>
       </form>
     </div>
