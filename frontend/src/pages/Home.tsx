@@ -62,7 +62,9 @@ function Home() {
             navigate("/game");
           }}
         />
-        <Table title="Leaderboard" entries={leaderboardEntries} />
+        {leaderboardEntries.length > 0 && (
+          <Table title="Leaderboard" entries={leaderboardEntries} />
+        )}
       </div>
     </div>
   );

@@ -84,7 +84,7 @@ function Game({ wordListLength = 10 }: Props) {
         (entry) => entry.guessed == true,
       ).length;
       setPopupMessage(
-        `Unlucky! You got ${numCorrect}/${wordListLength} correct.`,
+        `Game over! You got ${numCorrect}/${wordListLength} correct.`,
       );
     } else {
       const end = Date.now();
