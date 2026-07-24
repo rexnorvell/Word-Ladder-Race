@@ -6,11 +6,14 @@ import { getLeaderboardEntries } from "../services/api";
 import type { LeaderboardEntry } from "../types/LeaderboardEntry";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import type { AlertInfo } from "../types/AlertInfo";
+import Alert from "../components/Alert/Alert";
 
 function Home() {
   const [leaderboardEntries, setLeaderboardEntries] = useState<
     LeaderboardEntry[]
   >([]);
+  const [alert, setAlert] = useState<AlertInfo>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +25,10 @@ function Home() {
       const data = await getLeaderboardEntries();
       setLeaderboardEntries(data);
     } catch (err) {
+      setAlert({
+        message: `${err}`,
+        type: "error",
+      });
       console.error(err);
     }
   }
@@ -65,6 +72,7 @@ function Home() {
         {leaderboardEntries.length > 0 && (
           <Table title="Leaderboard" entries={leaderboardEntries} />
         )}
+        {alert && <Alert text={alert.message} type={alert.type} />}
       </div>
     </div>
   );
