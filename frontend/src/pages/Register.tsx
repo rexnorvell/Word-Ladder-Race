@@ -1,5 +1,5 @@
 import HeaderBar from "../components/HeaderBar/HeaderBar";
-import Form from "../components/Form/Form";
+import AuthForm from "../components/AuthForm/AuthForm";
 import { register } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert/Alert";
@@ -12,9 +12,17 @@ function Register({}: Props) {
   const navigate = useNavigate();
   const [alert, setAlert] = useState<AlertInfo>();
 
-  async function handleRegister(username: string, password: string) {
+  async function handleRegister(
+    username: string,
+    firstPassword: string,
+    secondPassword?: string,
+  ) {
+    if (firstPassword !== secondPassword) {
+      setAlert({ message: "Warning: Passwords must match", type: "warning" });
+      return;
+    }
     try {
-      await register({ username, password });
+      await register({ username, password: firstPassword });
       setAlert({ message: "Success!", type: "success" });
       navigate("/home");
     } catch (error) {
@@ -26,9 +34,12 @@ function Register({}: Props) {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <Form
+        <AuthForm
           buttonText="Register"
           title="Register"
+          usernamePlaceholder="Enter a unique username"
+          firstPasswordPlaceholder="Enter a secure password"
+          secondPasswordPlaceholder="Confirm your password"
           onSubmit={handleRegister}
         />
         {alert && <Alert text={alert.message} type={alert.type} />}

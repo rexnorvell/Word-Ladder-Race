@@ -1,5 +1,5 @@
 import HeaderBar from "../components/HeaderBar/HeaderBar";
-import Form from "../components/Form/Form";
+import AuthForm from "../components/AuthForm/AuthForm";
 import { login } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert/Alert";
@@ -26,7 +26,13 @@ function Login({}: Props) {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <Form buttonText="Log In" title="Log In" onSubmit={handleLogin} />
+        <AuthForm
+          buttonText="Log In"
+          title="Log In"
+          usernamePlaceholder="Enter username"
+          firstPasswordPlaceholder="Enter password"
+          onSubmit={handleLogin}
+        />
         {alert && <Alert text={alert.message} type={alert.type} />}
       </div>
     </div>
