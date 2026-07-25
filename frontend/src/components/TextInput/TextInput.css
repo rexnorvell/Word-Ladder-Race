@@ -1,6 +1,7 @@
 .TextInput {
     padding: 10px;
     font-family: var(--regular-font);
+    font-size: 1.6em;
     border-radius: var(--border-radius);
     border: none;
     outline: var(--outline-width) solid var(--primary-hover-color);

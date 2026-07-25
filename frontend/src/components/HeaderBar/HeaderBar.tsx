@@ -33,10 +33,10 @@ function HeaderBar() {
   return (
     <div className="HeaderBarContainer">
       <div className="HeaderBarLeft">
-        <TextBlock size={3} className="HeaderBar">
+        <TextBlock size={3} className="HeaderBar" textAlign="left">
           <strong>Rex's Word Ladder Race</strong>
         </TextBlock>
-        <TextBlock size={6} className="HeaderBar">
+        <TextBlock size={6} className="HeaderBar" textAlign="left">
           {username ? `Welcome, ${username}!` : "Welcome!"}
         </TextBlock>
       </div>

@@ -1,5 +1,4 @@
 .TextBlock {
-    text-align: center;
     color: var(--text-color-light);
     font-family: var(--regular-font);
     font-size: 1.6em;

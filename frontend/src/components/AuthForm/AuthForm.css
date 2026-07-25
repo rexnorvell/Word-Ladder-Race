@@ -8,10 +8,11 @@
     flex-direction: column;
     align-items: center;
     box-shadow: 4px 4px 8px var(--shadow-color);
+    padding: 0px 5vw;
 }
 
 .FormContents {
-    width: 50%;
+    width: 100%;
 }
 
 .FormHeader {

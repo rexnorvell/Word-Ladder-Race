@@ -5,11 +5,15 @@ interface Props {
   className?: string;
   size: 1 | 2 | 3 | 4 | 5 | 6;
   children: ReactNode;
+  textAlign?: "center" | "left" | "right";
 }
 
-function TextBlock({ className, size, children }: Props) {
+function TextBlock({ className, size, children, textAlign = "center" }: Props) {
   return (
-    <div className={`TextBlock TextBlock--${size} ${className}`}>
+    <div
+      className={`TextBlock TextBlock--${size} ${className}`}
+      style={{ textAlign: textAlign }}
+    >
       {children}
     </div>
   );
