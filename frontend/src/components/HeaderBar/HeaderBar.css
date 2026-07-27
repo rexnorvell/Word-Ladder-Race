@@ -1,11 +1,10 @@
 .HeaderBarContainer {
-    background-color: var(--surface-color);
-    border-bottom: 3px solid var(--primary-color);
+    background: linear-gradient(90deg, var(--surface-color) 0%, var(--primary-color) 100%);
     display: flex;
     flex-direction: row;
     align-items: center;
     column-gap: 20px;
-    padding: 10px 20px;
+    padding: 15px 20px;
     box-shadow: 4px 4px 8px var(--shadow-color);
 }
 
