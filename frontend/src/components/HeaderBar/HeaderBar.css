@@ -3,6 +3,8 @@
     border-bottom: 3px solid var(--primary-color);
     display: flex;
     flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
     padding: 10px 20px;
     box-shadow: 4px 4px 8px var(--shadow-color);
 }

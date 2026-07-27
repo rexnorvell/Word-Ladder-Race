@@ -1,3 +1,4 @@
+import Logo from "../../assets/images/logo.png";
 import { useEffect, useState } from "react";
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import TextBlock from "../TextBlock/TextBlock";
@@ -32,6 +33,7 @@ function HeaderBar() {
 
   return (
     <div className="HeaderBarContainer">
+      <img src={Logo} alt="" style={{ width: "4.8em", height: "5em" }}></img>
       <div className="HeaderBarLeft">
         <TextBlock size={3} className="HeaderBar" textAlign="left">
           <strong>Rex's Word Ladder Race</strong>
