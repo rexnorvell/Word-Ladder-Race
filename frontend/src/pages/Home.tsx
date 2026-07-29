@@ -5,7 +5,7 @@ import Table from "../components/Table/Table";
 import { getLeaderboardEntries } from "../services/api";
 import type { LeaderboardEntry } from "../types/LeaderboardEntry";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 import type { AlertInfo } from "../types/AlertInfo";
 import Alert from "../components/Alert/Alert";
 import "./Home.css";
@@ -34,6 +34,39 @@ function Home() {
       });
       console.error(err);
     }
+  }
+
+  let controlPanel: ReactNode = null;
+  if (!authContext.loading && authContext.user !== null) {
+    controlPanel = (
+      <Button
+        text="Play"
+        onClick={() => {
+          navigate("/game");
+        }}
+        fadeIn={true}
+      />
+    );
+  } else if (!authContext.loading) {
+    controlPanel = (
+      <>
+        <Button
+          text="Log In"
+          onClick={() => {
+            navigate("/login");
+          }}
+          fadeIn={true}
+        />
+        <Button
+          text="Create User"
+          color="secondary"
+          onClick={() => {
+            navigate("/register");
+          }}
+          fadeIn={true}
+        />
+      </>
+    );
   }
 
   return (
@@ -65,32 +98,7 @@ function Home() {
           possible. Climb the leaderboards as you face off against other players
           in this fast-paced puzzle-solving game!
         </TextBlock>
-        <div className="HomePageRow">
-          {authContext.user ? (
-            <Button
-              text="Play"
-              onClick={() => {
-                navigate("/game");
-              }}
-            />
-          ) : (
-            <>
-              <Button
-                text="Log In"
-                onClick={() => {
-                  navigate("/login");
-                }}
-              />
-              <Button
-                text="Create User"
-                color="secondary"
-                onClick={() => {
-                  navigate("/register");
-                }}
-              />
-            </>
-          )}
-        </div>
+        <div className="HomePageRow">{controlPanel}</div>
         {leaderboardEntries.length > 0 && (
           <Table title="Leaderboard" entries={leaderboardEntries} />
         )}

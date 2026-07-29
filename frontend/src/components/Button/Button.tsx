@@ -7,6 +7,7 @@ interface Props {
   icon?: ReactNode;
   color?: "primary" | "secondary" | "transparent";
   type?: "submit" | "reset" | "button" | undefined;
+  fadeIn?: boolean;
   onClick?: () => void;
 }
 
@@ -16,11 +17,12 @@ function Button({
   icon,
   color = "primary",
   type = "submit",
+  fadeIn = false,
   onClick = () => {},
 }: Props) {
   return (
     <button
-      className={`Button Button--${color} ${shadow ? "Button--shadow" : ""}`}
+      className={`Button Button--${color} ${shadow ? "Button--shadow" : ""} ${fadeIn ? "Button--fadeIn" : ""}`}
       onClick={onClick}
       type={type}
     >
