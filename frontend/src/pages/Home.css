@@ -1,0 +1,6 @@
+.HomePageRow {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1.6em;
+    justify-content: center;
+}

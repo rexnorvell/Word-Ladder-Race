@@ -37,7 +37,7 @@ function Register({}: Props) {
       <div className="PageContent">
         <AuthForm
           buttonText="Register"
-          title="Register"
+          title="Create User"
           usernamePlaceholder="Enter a unique username"
           firstPasswordPlaceholder="Enter a secure password"
           secondPasswordPlaceholder="Confirm your password"

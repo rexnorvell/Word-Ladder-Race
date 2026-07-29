@@ -7,14 +7,11 @@ import { useAuth } from "../../contexts/AuthContext";
 function HeaderBar() {
   const authContext = useAuth();
 
-  const options: [string, string][] = [
-    ["Home", "/home"],
-    ["Play", "/game"],
-  ];
+  const options: [string, string][] = [["Home", "/home"]];
   if (authContext.user) {
-    options.push(["Account", "/account"]);
+    options.push(["Play", "/game"], ["Account", "/account"]);
   } else {
-    options.push(["Login", "/login"], ["Register", "/register"]);
+    options.push(["Log In", "/login"], ["Create User", "/register"]);
   }
 
   return (

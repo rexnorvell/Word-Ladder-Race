@@ -6,16 +6,31 @@ import Register from "./pages/Register";
 import Account from "./pages/Account";
 
 import "./styles/App.css";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/game" element={<Game />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/account" element={<Account />} />
+      <Route
+        path="/game"
+        element={
+          <ProtectedRoute>
+            <Game />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/account"
+        element={
+          <ProtectedRoute>
+            <Account />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }

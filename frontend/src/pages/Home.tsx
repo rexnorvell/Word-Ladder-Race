@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { AlertInfo } from "../types/AlertInfo";
 import Alert from "../components/Alert/Alert";
+import "./Home.css";
+import { useAuth } from "../contexts/AuthContext";
 
 function Home() {
   const [leaderboardEntries, setLeaderboardEntries] = useState<
@@ -15,6 +17,7 @@ function Home() {
   >([]);
   const [alert, setAlert] = useState<AlertInfo>();
   const navigate = useNavigate();
+  const authContext = useAuth();
 
   useEffect(() => {
     loadLeaderboardEntries();
@@ -62,13 +65,32 @@ function Home() {
           possible. Climb the leaderboards as you face off against other players
           in this fast-paced puzzle-solving game!
         </TextBlock>
-        <Button
-          text="Play"
-          color="primary"
-          onClick={() => {
-            navigate("/game");
-          }}
-        />
+        <div className="HomePageRow">
+          {authContext.user ? (
+            <Button
+              text="Play"
+              onClick={() => {
+                navigate("/game");
+              }}
+            />
+          ) : (
+            <>
+              <Button
+                text="Log In"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              />
+              <Button
+                text="Create User"
+                color="secondary"
+                onClick={() => {
+                  navigate("/register");
+                }}
+              />
+            </>
+          )}
+        </div>
         {leaderboardEntries.length > 0 && (
           <Table title="Leaderboard" entries={leaderboardEntries} />
         )}
