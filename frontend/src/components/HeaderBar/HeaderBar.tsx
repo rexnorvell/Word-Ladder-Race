@@ -1,31 +1,17 @@
 import Logo from "../../assets/images/logo.png";
-import { useEffect, useState } from "react";
 import HamburgerMenu from "../HamburgerMenu/HamburgerMenu";
 import TextBlock from "../TextBlock/TextBlock";
-import { getUser } from "../../services/api";
 import "./HeaderBar.css";
+import { useAuth } from "../../contexts/AuthContext";
 
 function HeaderBar() {
-  const [username, setUsername] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadUser();
-  }, []);
-
-  async function loadUser() {
-    try {
-      const user = await getUser();
-      setUsername(user?.username);
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  const authContext = useAuth();
 
   const options: [string, string][] = [
     ["Home", "/home"],
     ["Play", "/game"],
   ];
-  if (username) {
+  if (authContext.user) {
     options.push(["Account", "/account"]);
   } else {
     options.push(["Login", "/login"], ["Register", "/register"]);
@@ -39,7 +25,7 @@ function HeaderBar() {
           <strong>Rex's Word Ladder Race</strong>
         </TextBlock>
         <TextBlock size={6} className="HeaderBar" textAlign="left">
-          {username ? `Welcome, ${username}!` : "Welcome!"}
+          {authContext.user ? `Welcome, ${authContext.user}!` : "Welcome!"}
         </TextBlock>
       </div>
       <div className="HeaderBarRight">

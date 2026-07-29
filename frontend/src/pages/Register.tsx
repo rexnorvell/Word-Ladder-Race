@@ -1,16 +1,17 @@
 import HeaderBar from "../components/HeaderBar/HeaderBar";
 import AuthForm from "../components/AuthForm/AuthForm";
-import { register } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/Alert/Alert";
 import { useState } from "react";
 import type { AlertInfo } from "../types/AlertInfo";
+import { useAuth } from "../contexts/AuthContext";
 
 interface Props {}
 
 function Register({}: Props) {
   const navigate = useNavigate();
   const [alert, setAlert] = useState<AlertInfo>();
+  const authContext = useAuth();
 
   async function handleRegister(
     username: string,
@@ -22,7 +23,7 @@ function Register({}: Props) {
       return;
     }
     try {
-      await register({ username, password: firstPassword });
+      await authContext.register({ username, password: firstPassword });
       setAlert({ message: "Success!", type: "success" });
       navigate("/home");
     } catch (error) {

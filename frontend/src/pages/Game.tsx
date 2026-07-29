@@ -5,9 +5,10 @@ import TextBlock from "../components/TextBlock/TextBlock";
 import PopUp from "../components/PopUp/PopUp";
 import { useEffect, useState, useRef } from "react";
 import type { CreateLeaderboardEntryRequest } from "../types/CreateLeaderboardEntryRequest";
-import { getUser, submitLeaderboardEntry } from "../services/api";
+import { submitLeaderboardEntry } from "../services/api";
 import loadWords from "../services/words";
 import "./Game.css";
+import { useAuth } from "../contexts/AuthContext";
 
 interface Props {
   wordListLength?: number;
@@ -21,10 +22,11 @@ interface WordEntry {
 }
 
 function Game({ wordListLength = 10 }: Props) {
+  const authContext = useAuth();
+
   const [wordData, setWordData] = useState<WordEntry[]>([]);
   const [guess, setGuess] = useState<string>("");
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,17 +35,6 @@ function Game({ wordListLength = 10 }: Props) {
     inputRef.current?.focus();
     setWordData(createWordData());
     setStartTime(Date.now());
-
-    async function loadUser() {
-      try {
-        const user = await getUser();
-        setUsername(user?.username);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    loadUser();
   }, [wordListLength]);
 
   useEffect(() => {
@@ -92,13 +83,13 @@ function Game({ wordListLength = 10 }: Props) {
         return;
       }
       const totalTime = end - startTime;
-      if (username) {
+      if (authContext.user) {
         submitTime({
           time_ms: totalTime,
         });
       }
       setPopupMessage(
-        `Good job${username ? `, ${username}` : ""}! Elapsed time: ${totalTime / 1000} seconds.`,
+        `Good job${authContext.user ? `, ${authContext.user}` : ""}! Elapsed time: ${totalTime / 1000} seconds.`,
       );
     }
   }
