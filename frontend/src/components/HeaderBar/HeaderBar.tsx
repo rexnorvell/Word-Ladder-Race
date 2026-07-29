@@ -7,10 +7,13 @@ import { useAuth } from "../../contexts/AuthContext";
 function HeaderBar() {
   const authContext = useAuth();
 
+  let welcomeMessage: string = "\u00A0";
   const options: [string, string][] = [["Home", "/home"]];
   if (authContext.user) {
+    welcomeMessage = `Welcome, ${authContext.user}!`;
     options.push(["Play", "/game"], ["Account", "/account"]);
-  } else {
+  } else if (!authContext.loading && !authContext.user) {
+    welcomeMessage = "Welcome!";
     options.push(["Log In", "/login"], ["Create User", "/register"]);
   }
 
@@ -22,8 +25,9 @@ function HeaderBar() {
           <strong>Rex's Word Ladder Race</strong>
         </TextBlock>
         <TextBlock size={6} className="HeaderBar" textAlign="left">
-          {authContext.user ? `Welcome, ${authContext.user}!` : "Welcome!"}
+          {welcomeMessage}
         </TextBlock>
+        ;
       </div>
       <div className="HeaderBarRight">
         <HamburgerMenu options={options} />
