@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to Rex's Word Ladder Race! A "word ladder" is a series of equal-length words that differ by only one letter. For example, Pork > Park > Bark > Barn is a word ladder! In this game, the user is given a list of definitions corresponding to four-letter words. The user must guess the words corresponding to the definitions as quickly as possible, with the time stopping once all words have been guessed. Users can race against others to achcieve the fastest times and reach the top of the global leaderboard! To play, visit the GitHub Pages deployment at [this link](https://rexnorvell.github.io/Word-Ladder-Race/#/home)!
+Welcome to Rex's Word Ladder Race! A "word ladder" is a series of equal-length words that differ by only one letter. For example, Pork > Park > Bark > Barn is a word ladder! In this game, the user is given a list of definitions corresponding to four-letter words. The user must guess the words corresponding to the definitions as quickly as possible, with the time stopping once all words have been guessed. Users can race against others to achcieve the fastest times and reach the top of the global leaderboard! To play, visit the Cloudflare Pages deployment at [this link](https://word-ladder-race.pages.dev)!
 
 ![Rex's Word Ladder Race Logo](frontend/src/assets/images/logo.png)
 

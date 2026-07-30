@@ -1,7 +1,7 @@
 import { createSession } from "../utils/auth";
 import { hashPassword } from "../utils/password";
 
-export async function register(request: Request, env: Env, corsHeaders: HeadersInit): Promise<Response> {
+export async function register(request: Request, env: Env): Promise<Response> {
     const { username, password } = await request.json<{
         username: string;
         password: string;
@@ -13,7 +13,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
     if (!USERNAME_REGEX.test(trimmedUsername)) {
         return Response.json(
             { detail: "Username must be between 3 and 20 characters." },
-            { status: 400, headers: corsHeaders }
+            { status: 400 },
         );
     }
 
@@ -21,7 +21,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
     if (password.length < 8) {
         return Response.json(
             { detail: "Password must be at least 8 characters." },
-            { status: 400, headers: corsHeaders }
+            { status: 400 },
         );
     }
 
@@ -37,7 +37,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
     if (existing) {
         return Response.json(
             { detail: "Username already exists." },
-            { status: 409, headers: corsHeaders }
+            { status: 409 },
         );
     }
 
@@ -61,7 +61,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
     const sessionToken: string = await createSession(env, userId, createdAt);
 
     // Return the cookie
-    const headers = new Headers(corsHeaders);
+    const headers = new Headers();
     headers.append(
         "Set-Cookie",
         [
@@ -69,7 +69,7 @@ export async function register(request: Request, env: Env, corsHeaders: HeadersI
             "HttpOnly",
             "Path=/",
             "Max-Age=28800",
-            env.ENVIRONMENT as string === "production" ? "SameSite=None" : "SameSite=Lax",
+            "SameSite=Lax",
             ...(env.ENVIRONMENT as string === "production" ? ["Secure"] : []),
         ].join("; ")
     );

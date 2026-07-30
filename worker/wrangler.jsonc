@@ -4,7 +4,7 @@
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "word-ladder-race-worker",
+	"name": "word-ladder-race",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-07-15",
 	"observability": {
@@ -46,7 +46,7 @@
 	"env": {
 		"production": {
 			"vars": {
-				"ALLOWED_ORIGINS": "https://rexnorvell.github.io",
+				"ALLOWED_ORIGINS": "https://word-ladder-race.pages.dev",
 				"ENVIRONMENT": "production"
 			},
 			"d1_databases": [

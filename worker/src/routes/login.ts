@@ -1,7 +1,7 @@
 import { createSession } from "../utils/auth";
 import { verifyPassword } from "../utils/password";
 
-export async function login(request: Request, env: Env, corsHeaders: HeadersInit): Promise<Response> {
+export async function login(request: Request, env: Env): Promise<Response> {
     const { username, password } = await request.json<{
         username: string;
         password: string;
@@ -22,7 +22,7 @@ export async function login(request: Request, env: Env, corsHeaders: HeadersInit
     if (!existing) {
         return Response.json(
             { detail: "Invalid credentials." },
-            { status: 401, headers: corsHeaders }
+            { status: 401 },
         );
     }
 
@@ -31,7 +31,7 @@ export async function login(request: Request, env: Env, corsHeaders: HeadersInit
     if (!verified) {
         return Response.json(
             { detail: "Invalid credentials." },
-            { status: 401, headers: corsHeaders }
+            { status: 401 },
         );
     }
 
@@ -42,7 +42,7 @@ export async function login(request: Request, env: Env, corsHeaders: HeadersInit
         existing.id,
         created_at
     );
-    const headers = new Headers(corsHeaders);
+    const headers = new Headers();
     headers.append(
         "Set-Cookie",
         [
@@ -50,7 +50,7 @@ export async function login(request: Request, env: Env, corsHeaders: HeadersInit
             "HttpOnly",
             "Path=/",
             "Max-Age=28800",
-            env.ENVIRONMENT as string === "production" ? "SameSite=None" : "SameSite=Lax",
+            "SameSite=Lax",
             ...(env.ENVIRONMENT as string === "production" ? ["Secure"] : []),
         ].join("; ")
     );

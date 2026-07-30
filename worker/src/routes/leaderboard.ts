@@ -1,20 +1,19 @@
 import { getCurrentUser } from "../utils/auth";
 
-export async function leaderboard(request: Request, env: Env, corsHeaders: HeadersInit): Promise<Response> {
+export async function leaderboard(request: Request, env: Env): Promise<Response> {
     if (request.method == "GET") {
-        return getLeaderboard(env, corsHeaders);
+        return getLeaderboard(env);
     }
     else if (request.method == "POST") {
-        return submitScore(request, env, corsHeaders);
+        return submitScore(request, env);
     }
 
     return new Response("Method Not Allowed", {
         status: 405,
-        headers: corsHeaders,
     });
 }
 
-async function submitScore(request: Request, env: Env, corsHeaders: HeadersInit): Promise<Response> {
+async function submitScore(request: Request, env: Env): Promise<Response> {
     const { time_ms } = await request.json<{
         time_ms: number;
     }>();
@@ -24,7 +23,7 @@ async function submitScore(request: Request, env: Env, corsHeaders: HeadersInit)
     if (!user) {
         return Response.json(
             { detail: "Unauthorized" },
-            { status: 401, headers: corsHeaders }
+            { status: 401 }
         );
     }
 
@@ -71,11 +70,10 @@ async function submitScore(request: Request, env: Env, corsHeaders: HeadersInit)
     // Return a successful response with the headers
     return Response.json(
         { success: true },
-        { headers: corsHeaders }
     );
 }
 
-async function getLeaderboard(env: Env, corsHeaders: HeadersInit) {
+async function getLeaderboard(env: Env) {
     const { results } = await env.DB
         .prepare(
           `
@@ -88,7 +86,5 @@ async function getLeaderboard(env: Env, corsHeaders: HeadersInit) {
           `
         )
         .all();
-    return Response.json(results, {
-        headers: corsHeaders,
-    });
+    return Response.json(results);
 }

@@ -1,6 +1,6 @@
 import { hashSessionToken, getSessionToken } from "../utils/auth";
 
-export async function logout(request: Request, env: Env, corsHeaders: HeadersInit): Promise<Response> {
+export async function logout(request: Request, env: Env): Promise<Response> {
     const sessionToken = getSessionToken(request);
     if (sessionToken) {
         const sessionHash = await hashSessionToken(sessionToken);
@@ -14,7 +14,7 @@ export async function logout(request: Request, env: Env, corsHeaders: HeadersIni
     }
     
     // Remove the cookie from the user's browser
-    const headers = new Headers(corsHeaders);
+    const headers = new Headers();
     headers.append(
         "Set-Cookie",
         [
@@ -22,7 +22,7 @@ export async function logout(request: Request, env: Env, corsHeaders: HeadersIni
             "HttpOnly",
             "Path=/",
             "Max-Age=28800",
-            env.ENVIRONMENT as string === "production" ? "SameSite=None" : "SameSite=Lax",
+            "SameSite=Lax",
             ...(env.ENVIRONMENT as string === "production" ? ["Secure"] : []),
         ].join("; ")
     );
