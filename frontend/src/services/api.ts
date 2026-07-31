@@ -50,6 +50,11 @@ export async function register(credentials: LogInRequest) {
     return res.json();
 }
 
+export async function getAccountInfo() {
+    const res = await apiFetch("/account");
+    return res.json();
+}
+
 export async function getUser() {
     const res = await fetch(`${BASE_URL}/me`, { credentials: "include" });
     if (res.status === 401) {

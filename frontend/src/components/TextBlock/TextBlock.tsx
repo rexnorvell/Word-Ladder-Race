@@ -6,12 +6,19 @@ interface Props {
   size: 1 | 2 | 3 | 4 | 5 | 6;
   children: ReactNode;
   textAlign?: "center" | "left" | "right";
+  fadeIn?: boolean;
 }
 
-function TextBlock({ className, size, children, textAlign = "center" }: Props) {
+function TextBlock({
+  className,
+  size,
+  children,
+  textAlign = "center",
+  fadeIn = false,
+}: Props) {
   return (
     <div
-      className={`TextBlock TextBlock--${size} ${className}`}
+      className={`TextBlock TextBlock--${size} ${className} ${fadeIn ? "TextBlock--fadeIn" : ""}`}
       style={{ textAlign: textAlign }}
     >
       {children}
