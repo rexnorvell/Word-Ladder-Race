@@ -24,6 +24,7 @@ interface WordEntry {
 function Game({ wordListLength = 10 }: Props) {
   const authContext = useAuth();
 
+  const [transitionBlocker, setTransitionBlocker] = useState(false);
   const [wordData, setWordData] = useState<WordEntry[]>([]);
   const [guess, setGuess] = useState<string>("");
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -59,6 +60,7 @@ function Game({ wordListLength = 10 }: Props) {
 
   function newGame() {
     setPopupMessage(null);
+    setTransitionBlocker((prev) => !prev);
     setWordData(createWordData());
     setGuess("");
     setStartTime(Date.now());
@@ -167,7 +169,7 @@ function Game({ wordListLength = 10 }: Props) {
         {wordData.length > 0 && (
           <div className="WordGrid">
             {wordData.map(({ word, definition, guessed, incorrect }) => (
-              <div className="GameRow" key={word}>
+              <div className="GameRow" key={`${transitionBlocker}-${word}`}>
                 <div
                   className={`WordCell WordCell--${guessed ? "guessed" : "not-guessed"} ${incorrect ? "WordCell--incorrect" : ""}`}
                 >
