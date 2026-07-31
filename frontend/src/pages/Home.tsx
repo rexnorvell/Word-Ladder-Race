@@ -73,10 +73,10 @@ function Home() {
     <div className="App">
       <HeaderBar />
       <div className="PageContent">
-        <TextBlock size={4}>
+        <TextBlock size={4} fadeIn={true}>
           <strong>Welcome to Rex's Word Ladder Race!</strong>
         </TextBlock>
-        <TextBlock size={6}>
+        <TextBlock size={6} fadeIn={true}>
           A <em>word ladder</em> is a chain of words that differ by only one
           letter. For example,{" "}
           <em>
@@ -84,7 +84,7 @@ function Home() {
           </em>{" "}
           is a word ladder!
         </TextBlock>
-        <TextBlock size={6}>
+        <TextBlock size={6} fadeIn={true}>
           In the game, players are shown a series of definitions that correspond
           to words. To guess a word, simply type it in the text box at the top
           of the word grid. If a guess is{" "}
@@ -93,7 +93,7 @@ function Home() {
           </span>
           , the word will appear beside its definition.
         </TextBlock>
-        <TextBlock size={6}>
+        <TextBlock size={6} fadeIn={true}>
           The goal is to guess all words in the ladder as <em>quickly</em> as
           possible. Climb the leaderboards as you face off against other players
           in this fast-paced puzzle-solving game!
