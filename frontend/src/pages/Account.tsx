@@ -39,6 +39,11 @@ function Account({}: Props) {
     loadAccountInfo();
   }, []);
 
+  async function handleLogout() {
+    await authContext.logout();
+    navigate("/home");
+  }
+
   const navigate = useNavigate();
   const authContext = useAuth();
 
@@ -74,14 +79,7 @@ function Account({}: Props) {
   );
 
   const signOutButton = (alert || accountInfo !== undefined) && (
-    <Button
-      text="Sign Out"
-      onClick={() => {
-        authContext.logout();
-        navigate("/home");
-      }}
-      fadeIn={true}
-    />
+    <Button text="Sign Out" onClick={handleLogout} fadeIn={true} />
   );
 
   return (
