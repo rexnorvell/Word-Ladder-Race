@@ -86,8 +86,8 @@ function Home() {
         </TextBlock>
         <TextBlock size={6}>
           In the game, players are shown a series of definitions that correspond
-          to words. To guess a word, simply type it in the text box at the
-          bottom of the word grid. If a guess is{" "}
+          to words. To guess a word, simply type it in the text box at the top
+          of the word grid. If a guess is{" "}
           <span style={{ color: "var(--success-color)" }}>
             <strong>correct</strong>
           </span>

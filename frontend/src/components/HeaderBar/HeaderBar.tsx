@@ -27,7 +27,6 @@ function HeaderBar() {
         <TextBlock size={6} className="HeaderBar" textAlign="left">
           {welcomeMessage}
         </TextBlock>
-        ;
       </div>
       <div className="HeaderBarRight">
         <HamburgerMenu options={options} />
