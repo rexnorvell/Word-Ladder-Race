@@ -18,8 +18,8 @@ function TextBlock({
 }: Props) {
   return (
     <div
-      className={`TextBlock TextBlock--${size} ${className} ${fadeIn ? "TextBlock--fadeIn" : ""}`}
-      style={{ textAlign: textAlign }}
+      className={`TextBlock ${className} ${fadeIn ? "TextBlock--fadeIn" : ""}`}
+      style={{ textAlign: textAlign, fontSize: `${4 - size * 0.4}em` }}
     >
       {children}
     </div>

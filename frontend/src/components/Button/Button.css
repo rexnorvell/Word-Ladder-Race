@@ -18,18 +18,7 @@
 }
 
 .Button--fadeIn {
-    animation: var(--transition-duration) buttonPopIn ease-out;
-}
-
-@keyframes buttonPopIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    animation: var(--transition-duration) popAndFadeIn ease-out;
 }
 
 .Button--primary {

@@ -5,38 +5,5 @@
 }
 
 .TextBlock--fadeIn {
-    animation: var(--transition-duration) textBlockFadeIn ease-out;
-}
-
-@keyframes textBlockFadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.TextBlock--1 {
-    font-size: 3.6em;
-}
-
-.TextBlock--2 {
-    font-size: 3.2em;
-}
-
-.TextBlock--3 {
-    font-size: 2.8em;
-}
-
-.TextBlock--4 {
-    font-size: 2.4em;
-}
-
-.TextBlock--5 {
-    font-size: 2em;
-}
-
-.TextBlock--6 {
-    font-size: 1.6em;
+    animation: fadeIn var(--transition-duration) ease-out;
 }
