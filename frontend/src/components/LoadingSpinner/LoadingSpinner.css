@@ -1,0 +1,26 @@
+.LoadingSpinner {
+  --size: 1px;
+
+  width: calc(48 * var(--size));
+  height: calc(48 * var(--size));
+  border-radius: 50%;
+  border-top: calc(3 * var(--size)) solid var(--text-color-light);
+  border-right: calc(3 * var(--size)) solid transparent;
+  animation: rotate 1s linear infinite;
+}
+
+.LoadingSpinnerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
