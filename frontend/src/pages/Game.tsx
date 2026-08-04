@@ -45,10 +45,8 @@ function Game({ wordListLength = 10 }: Props) {
   }, [wordData]);
 
   useEffect(() => {
-    if (!popupMessage) {
-      inputRef.current?.focus();
-    }
-  }, [popupMessage]);
+    inputRef.current?.focus();
+  }, [transitionBlocker]);
 
   async function submitTime(entry: CreateLeaderboardEntryRequest) {
     try {
